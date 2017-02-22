@@ -6,14 +6,33 @@ import {connect} from "react-redux";
 import {selectSubreddit,fetchPostsIfNeeded,invalidateSubreddit} from '../actions/actions';
 import Picker from '../components/Picker';
 import Posts from '../components/Posts';
+import fetch from "isomorphic-fetch";
+
+async function load() {
+    try{
+        let response = await fetch(`https://www.reddit.com/r/reactjs.json`)
+        console.log("response");
+        console.log(response);
+        let data = await response.json();
+        console.log("data");
+        console.log(data)
+    }
+    catch (err){
+        console.log(err);
+    }
+}
 
 class AsyncApp extends Component{
     constructor(props){
         super(props);
+        load();
     }
     componentDidMount(){
         console.log(this.props.selectedSubreddit);
         this.props.dispatch(fetchPostsIfNeeded(this.props.selectedSubreddit));
+
+
+
     }
     componentWillReceiveProps(nextProps){
         if(nextProps.selectedSubreddit !== this.props.selectedSubreddit){

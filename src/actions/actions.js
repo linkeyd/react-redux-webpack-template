@@ -49,6 +49,7 @@ export const fetchPosts= (subreddit)=>{
 
 const shouldFetchPosts = (state,subreddit)=>{
     const posts = state.postsBySubreddit[subreddit]
+    console.log(state)
     if(!posts){
         return true
     }else if(posts.isFetching){
